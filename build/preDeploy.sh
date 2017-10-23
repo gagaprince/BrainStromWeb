@@ -16,7 +16,7 @@ git pull
 
 mvn clean -Plocal package
 
-mv target/ROOT.war /usr/share/tomcat/webapps/
+sudo mv target/ROOT.war /usr/share/tomcat/webapps/
 
 echo 'kill BrainStrom'
 
