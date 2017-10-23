@@ -16,7 +16,22 @@ git pull
 
 mvn clean -Plocal package
 
+#如果是多台机器则要循环执行下列shell
+scp target/ROOT.war gagaprince@wzdmeituan02:/usr/share/tomcat/webapps/
+
+ssh gagaprince@wzdmeituan02   << remotessh
+
+sudo rm -rf /usr/share/tomcat/webapps/ROOT
+
+sh /home/gagaprince/build/deploy.sh
+
+exit
+
+remotessh
+
 sudo rm -rf /usr/share/tomcat/webapps/ROOT
 
 sudo mv target/ROOT.war /usr/share/tomcat/webapps/
+
+
 
