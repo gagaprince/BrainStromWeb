@@ -1,4 +1,4 @@
-package com.prince.myproj.blog.models;
+package com.prince.myproj.brain.models;
 
 /**
  * Created by gagaprince on 16-1-2.

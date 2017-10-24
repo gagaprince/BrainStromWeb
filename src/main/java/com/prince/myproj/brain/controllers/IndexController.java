@@ -1,4 +1,4 @@
-package com.prince.myproj.blog.controllers;
+package com.prince.myproj.brain.controllers;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -28,6 +28,7 @@ public class IndexController {
     @RequestMapping("/index-api")
     @ResponseBody
     public Object indexApi(){
+        // http://localhost:9999/brain/index-api
         Map<String,String> map = new HashMap<String, String>();
         map.put("aaa","bbb");
         return map;
