@@ -43,11 +43,12 @@ public class HandleQuestionService {
                     String answerStr = line.replaceAll("\\t","").trim();
 //                    logger.info("问题："+questionStr);
 //                    logger.info("答案："+answerStr);
-                    handleByQuestionAndAnswers(questionStr,answerStr,cate);
+                    BrainQuestionModel brainQuestionModel = handleByQuestionAndAnswers(questionStr,answerStr,cate);
+                    brainQuestionDao.save(brainQuestionModel);
                 }else{
                     if(line.endsWith(":")||line.endsWith("：")){
                         cate = line.substring(0,line.length()-1);
-                        logger.info("分类:"+cate);
+//                        logger.info("分类:"+cate);
                     }
                 }
             }
@@ -64,32 +65,48 @@ public class HandleQuestionService {
                 e.printStackTrace();
             }
         }
-        /*BrainQuestionModel brainQuestionModel = new BrainQuestionModel();
-        brainQuestionModel.setQuestion("这是一个测试的问题");
-        brainQuestionModel.setAnswers("答案1|答案2|答案3|答案4");
-        brainQuestionModel.setAnswer(1);
-        brainQuestionModel.setCate("测试");
-        brainQuestionModel.setDifficult(1);
-        brainQuestionModel.setCreateTime(DateUtil.now());
-        brainQuestionDao.save(brainQuestionModel);*/
+
     }
-    private void handleByQuestionAndAnswers(String question,String answers,String cate){
+    private BrainQuestionModel handleByQuestionAndAnswers(String question,String answers,String cate){
         String answerCode = question.substring(question.length()-1);
         question = question.substring(1,question.length()-1).trim();
 //        logger.info("问题："+question);
 //        logger.info("答案选项："+answerCode);
-        String pattern = "(A[\\.|、]?.*)(B[\\.|、]?.*)(C[\\.|、]?.*)(D[\\.|、]?.*)?";
+        String pattern = "(A[\\.|．|、]?(.*?))(B[\\.|．|、]?(.*?))(C[\\.|．|、]?(.*?))(D[\\.|．|、]?(.*))";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(answers);
+        StringBuffer sb = new StringBuffer("");
         if(m.find()){
 //            logger.info(m.group(0));
 //            logger.info(m.group(1));
 //            logger.info(m.group(2));
 //            logger.info(m.group(3));
 //            logger.info(m.group(4));
+//            logger.info(m.group(5));
+//            logger.info(m.group(6));
+            sb.append(trimAll(m.group(2))).append("|")
+                    .append(trimAll(m.group(4))).append("|")
+                    .append(trimAll(m.group(6))).append("|");
+            if(m.groupCount()>7){
+                sb.append(trimAll(m.group(8)));
+            }
         }else {
             logger.info("没有匹配到："+answers);
         }
-
+        BrainQuestionModel brainQuestionModel = new BrainQuestionModel();
+        brainQuestionModel.setQuestion(question);
+        brainQuestionModel.setAnswers(trimAll(sb.toString()));
+        brainQuestionModel.setAnswer(parseAnswerNum(answerCode));
+        brainQuestionModel.setCate(cate);
+        brainQuestionModel.setDifficult(1);
+        brainQuestionModel.setCreateTime(DateUtil.now());
+        return brainQuestionModel;
+    }
+    private int parseAnswerNum(String answerCode){
+        return answerCode.charAt(0)-65;
+    }
+    private String trimAll(String s){
+        String str = s.trim().replaceAll("　+","");
+        return str;
     }
 }
