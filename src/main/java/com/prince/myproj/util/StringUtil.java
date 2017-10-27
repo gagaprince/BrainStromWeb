@@ -61,4 +61,27 @@ public class StringUtil {
 		}
 		return reVal;
 	}
+
+	public static String convertUnicodeToUTF(String unicode){
+		StringBuilder sb = new StringBuilder();
+		int i = -1;
+		int pos = 0;
+
+		while((i=unicode.indexOf("%u", pos)) != -1){
+			sb.append(unicode.substring(pos, i));
+			try{
+				if(i+5 < unicode.length()){
+					pos = i+6;
+					sb.append((char)Integer.parseInt(unicode.substring(i+2, i+6), 16));
+				}
+			}catch (Exception e){
+				// 说明不是unicode字符
+				sb.append(unicode.substring(i+1, i+6));
+			}
+		}
+		if (pos < unicode.length()) {
+			sb.append(unicode.substring(pos, unicode.length()));
+		}
+		return sb.toString();
+	}
 }

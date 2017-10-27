@@ -57,8 +57,13 @@
                 <!-- <value>WriteMapNullValue</value> -->
                 <value>QuoteFieldNames</value>
                 <value>WriteDateUseDateFormat</value>
+                <value>DisableCircularReferenceDetect</value>
             </util:list>
         </property>
+    </bean>
+
+    <bean id="DisableCircularReferenceDetect" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+        <property name="staticField" value="com.alibaba.fastjson.serializer.SerializerFeature.DisableCircularReferenceDetect"></property>
     </bean>
 
 </beans>
