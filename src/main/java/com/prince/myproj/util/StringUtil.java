@@ -54,4 +54,11 @@ public class StringUtil {
 		}
 		return val;
 	}
+
+	public static String getString(String reVal,String deVal){
+		if(reVal==null){
+			reVal = deVal;
+		}
+		return reVal;
+	}
 }

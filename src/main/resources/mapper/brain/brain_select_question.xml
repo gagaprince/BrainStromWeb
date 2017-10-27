@@ -16,7 +16,7 @@
     <insert id="save"
             parameterType="BrainQuestionModel"
             useGeneratedKeys="true" keyProperty="id">
-        insert into select_question(
+        insert into brain_select_question(
         <trim suffixOverrides=",">
             <if test="id != null"> id ,</if>
             <if test="question != null"> question ,</if>
@@ -40,7 +40,7 @@
     </insert>
 
     <select id="select" parameterType="map" resultMap="QuestionModelResultMap">
-        select * from select_question s
+        select * from brain_select_question s
         <where>
             1=1
             <if test="id != null">

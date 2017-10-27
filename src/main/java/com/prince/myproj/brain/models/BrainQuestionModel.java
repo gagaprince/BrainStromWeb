@@ -1,23 +1,23 @@
 package com.prince.myproj.brain.models;
 
 public class BrainQuestionModel {
-    private long id;
+    private Long id;
     private String question;
     private String answers;
-    private int answer;
-    private int difficult;
+    private Integer answer;
+    private Integer difficult;
     private String cate;
     private String createTime;
 
-    public int getAnswer() {
+    public Integer getAnswer() {
         return answer;
     }
 
-    public int getDifficult() {
+    public Integer getDifficult() {
         return difficult;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -33,7 +33,7 @@ public class BrainQuestionModel {
         return question;
     }
 
-    public void setAnswer(int answer) {
+    public void setAnswer(Integer answer) {
         this.answer = answer;
     }
 
@@ -45,11 +45,11 @@ public class BrainQuestionModel {
         this.createTime = createTime;
     }
 
-    public void setDifficult(int difficult) {
+    public void setDifficult(Integer difficult) {
         this.difficult = difficult;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
