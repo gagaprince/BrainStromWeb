@@ -1,9 +1,12 @@
 package com.prince.myproj.brain.controllers;
 
+import com.alibaba.fastjson.JSONObject;
 import com.prince.myproj.brain.dao.BrainWordModelMapper;
 import com.prince.myproj.brain.models.BrainWordModel;
+import com.prince.myproj.brain.services.BrainRecordService;
 import com.prince.myproj.brain.services.BrainWordService;
 import com.prince.myproj.common.bean.AjaxBean;
+import com.prince.myproj.util.RequestUtil;
 import com.prince.myproj.util.StringUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -24,6 +28,9 @@ public class WordsController {
     @Autowired
     private BrainWordService brainWordService;
 
+    @Autowired
+    private BrainRecordService brainRecordService;
+
     @RequestMapping("/rw")
     @ResponseBody
     public Object randomWords(HttpServletRequest request, HttpServletResponse response){
@@ -31,6 +38,34 @@ public class WordsController {
         int day = StringUtil.parseIntFromRequest(request,"day",0);
         AjaxBean ajaxBean = brainWordService.getWordsByDay(day);
         return ajaxBean;
+    }
+
+    @RequestMapping("/loadRecord")
+    @ResponseBody
+    public Object loadRecord(HttpServletRequest request, HttpServletResponse response){
+        // http://localhost:9999/brain/loadRecord
+        try {
+            JSONObject requestJson = RequestUtil.getRequestBody(request);
+            String openId = requestJson.getString("openId");
+            return brainRecordService.loadRecord(openId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    @RequestMapping("/loadRecordNum")
+    @ResponseBody
+    public Object loadRecordNum(HttpServletRequest request, HttpServletResponse response){
+        // http://localhost:9999/brain/loadRecord
+        try {
+            JSONObject requestJson = RequestUtil.getRequestBody(request);
+            String openId = requestJson.getString("openId");
+            return brainRecordService.loadRecordNum(openId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 

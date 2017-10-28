@@ -8,6 +8,14 @@ public class DateUtil {
         return format(new Date());
     }
 
+    public static Date today(){
+        return new Date();
+    }
+
+    public static boolean equalsWithDate(Date date1,Date date2){
+        return format(date1,"yyyy-MM-dd").equals(format(date2,"yyyy-MM-dd"));
+    }
+
     public static String format(Date date){
         return format(date,null);
     }

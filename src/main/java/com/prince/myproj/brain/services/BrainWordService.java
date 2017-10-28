@@ -46,10 +46,12 @@ public class BrainWordService {
         return ajaxBean;
     }
 
-    private void finishAllMsgWithWordList(List<BrainWordModel> brainWordModels){
-        Map<Integer,BrainWordModel> brainWordModelMap = parseWordListToMap(brainWordModels);
-        findMeansWithList(brainWordModels,brainWordModelMap);
-        findPosWithList(brainWordModels);
+    public void finishAllMsgWithWordList(List<BrainWordModel> brainWordModels){
+        if(brainWordModels.size()>0) {
+            Map<Integer, BrainWordModel> brainWordModelMap = parseWordListToMap(brainWordModels);
+            findMeansWithList(brainWordModels, brainWordModelMap);
+            findPosWithList(brainWordModels);
+        }
     }
 
     private void findPosWithList(List<BrainWordModel> brainWordModels){
@@ -102,7 +104,7 @@ public class BrainWordService {
         return brainWordModelMap;
     }
 
-    private List<BrainWordModel> findBrainWordModelsBySL(long start, long length){
+    public List<BrainWordModel> findBrainWordModelsBySL(long start, long length){
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("start",start);
         map.put("length",length);

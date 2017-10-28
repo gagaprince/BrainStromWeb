@@ -21,7 +21,7 @@ public class HttpUtil {
                 BufferedReader bufr = new BufferedReader(isr);
                 String str;
                 while ((str = bufr.readLine()) != null) {
-                    sb.append(str);
+                    sb.append(str).append('\n');
                 }
                 bufr.close();
             } else {

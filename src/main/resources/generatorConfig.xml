@@ -53,6 +53,14 @@
                <!--enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false"></table>-->
+        <!--<table tableName="brain_sentence" domainObjectName="BrainSentenceModel"-->
+            <!--enableCountByExample="false" enableUpdateByExample="false"-->
+            <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+            <!--selectByExampleQueryId="false"></table>-->
+        <table tableName="brain_word_record" domainObjectName="BrainWordRecordModel"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false"></table>
 
-    </context>
+</context>
 </generatorConfiguration>
