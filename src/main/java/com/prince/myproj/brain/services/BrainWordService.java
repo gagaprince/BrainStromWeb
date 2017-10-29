@@ -61,9 +61,12 @@ public class BrainWordService {
 
         for(int i=0;i<brainWordModels.size();i++){
             BrainWordModel brainWordModel = brainWordModels.get(i);
-            BrainMeanModel brainMeanModel = brainWordModel.getBrainMeanModel();
-            BrainPosModel brainPosModel = brainPosModelMap.get(brainMeanModel.getPosid());
-            brainWordModel.setBrainPosModel(brainPosModel);
+            List<BrainMeanModel> brainMeanModels = brainWordModel.getBrainMeanModels();
+            for(int j=0;j<brainMeanModels.size();j++){
+                BrainMeanModel brainMeanModel = brainMeanModels.get(j);
+                BrainPosModel brainPosModel = brainPosModelMap.get(brainMeanModel.getPosid());
+                brainMeanModel.setBrainPosModel(brainPosModel);
+            }
         }
     }
 
@@ -83,7 +86,7 @@ public class BrainWordService {
             BrainMeanModel brainMeanModel = brainMeanModels.get(i);
             parseMeansToUTF8(brainMeanModel);
             BrainWordModel brainWordModel = brainWordModelMap.get(brainMeanModel.getWordid());
-            brainWordModel.setBrainMeanModel(brainMeanModel);
+            brainWordModel.addBrainMeanModel(brainMeanModel);
         }
     }
 

@@ -110,7 +110,9 @@
     ID IN
     <foreach collection="list" item="wordBean" index="index"
              open="(" close=")" separator=",">
-      #{wordBean.brainMeanModel.posid}
+      <foreach collection="wordBean.brainMeanModels" item="brainMeanModel" separator="," index="index1">
+        #{brainMeanModel.posid}
+      </foreach>
     </foreach>
 
   </select>
