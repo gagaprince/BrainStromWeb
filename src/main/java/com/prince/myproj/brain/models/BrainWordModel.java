@@ -47,6 +47,22 @@ public class BrainWordModel implements Serializable {
      */
     private Integer times;
 
+    private List<BrainSentenceModel> brainSentenceModels;
+
+    public void addBrainSentenceModel(BrainSentenceModel brainSentenceModel){
+        if(brainSentenceModels==null){
+            brainSentenceModels = new ArrayList<BrainSentenceModel>();
+        }
+        brainSentenceModels.add(brainSentenceModel);
+    }
+
+    public List<BrainSentenceModel> getBrainSentenceModels() {
+        return brainSentenceModels;
+    }
+
+    public void setBrainSentenceModels(List<BrainSentenceModel> brainSentenceModels) {
+        this.brainSentenceModels = brainSentenceModels;
+    }
 
     private List<BrainMeanModel> brainMeanModels;
 

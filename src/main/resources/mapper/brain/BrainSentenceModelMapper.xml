@@ -30,6 +30,21 @@
     from brain_sentence
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="selectSentencesWithWords" parameterType="list" resultMap="BaseResultMap">
+    select
+    *
+    from brain_sentence
+    where
+    key_word IN
+    <foreach collection="list" item="wordBean" index="index"
+             open="(" close=")" separator=",">
+      #{wordBean.word}
+    </foreach>
+
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--
       WARNING - @mbggenerated

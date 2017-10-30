@@ -1,6 +1,9 @@
 package com.prince.myproj.brain.dao;
 
 import com.prince.myproj.brain.models.BrainSentenceModel;
+import com.prince.myproj.brain.models.BrainWordModel;
+
+import java.util.List;
 
 public interface BrainSentenceModelMapper {
     /**
@@ -50,4 +53,6 @@ public interface BrainSentenceModelMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(BrainSentenceModel record);
+
+    List<BrainSentenceModel> selectSentencesWithWords(List<BrainWordModel> brainWordModels);
 }

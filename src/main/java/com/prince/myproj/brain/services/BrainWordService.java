@@ -31,6 +31,9 @@ public class BrainWordService {
     @Autowired
     private BrainPosModelMapper brainPosModelMapper;
 
+    @Autowired
+    private BrainSentenceService brainSentenceService;
+
     public AjaxBean getWordsByDay(int day){
         AjaxBean ajaxBean = new AjaxBean();
         // 根据不同天搜索不同的单词
@@ -51,6 +54,7 @@ public class BrainWordService {
             Map<Integer, BrainWordModel> brainWordModelMap = parseWordListToMap(brainWordModels);
             findMeansWithList(brainWordModels, brainWordModelMap);
             findPosWithList(brainWordModels);
+            brainSentenceService.findSentencesWithWords(brainWordModels);
         }
     }
 
