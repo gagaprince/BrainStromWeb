@@ -319,7 +319,7 @@
 
 
   <build>
-    <finalName>ROOT</finalName>
+    <finalName>brain</finalName>
     <!--<resources>-->
       <!--<resource>-->
         <!--<directory>src/main/resources</directory>-->
