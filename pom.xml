@@ -278,7 +278,7 @@
           </plugin>
 
         </plugins>
-        <finalName>ROOT</finalName>
+        <finalName>brain</finalName>
       </build>
     </profile>
 
@@ -319,7 +319,7 @@
 
 
   <build>
-    <finalName>brain</finalName>
+    <finalName>ROOT</finalName>
     <!--<resources>-->
       <!--<resource>-->
         <!--<directory>src/main/resources</directory>-->
@@ -338,7 +338,7 @@
           <contextFile>D:\tools\apache-tomcat-7.0.26\conf\context.xml</contextFile>
           <!-- application path always starts with / -->
           <path>/</path>
-          <port>9999</port>
+          <port>9999</port>F
           <uriEncoding>UTF-8</uriEncoding>
           <useTestClasspath>false</useTestClasspath>
         </configuration>
