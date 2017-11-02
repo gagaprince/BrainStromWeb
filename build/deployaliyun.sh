@@ -16,16 +16,12 @@ git pull
 
 mvn clean -Paliyun package
 
-rm -rf /usr/share/tomcat7/webapps1/brain/ 
+rm -rf /usr/share/tomcat7/webapps1/*
 
-rm -rf /usr/share/tomcat7/webapps1/brain.war
-
-mv target/brain.war /usr/share/tomcat7/webapps1/
+mv target/brain /usr/share/tomcat7/webapps1/
 
 echo 'kill brain'
 
-ps -ef|grep tomcat7 |grep -v grep|awk '{print $2}'|xargs kill -9
+killall -9 java
 
-cd /usr/share/tomcat7/
-
-sh bin/startup.sh
+sh /usr/share/tomcat7/bin/startup.sh 
