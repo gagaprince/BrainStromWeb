@@ -21,4 +21,11 @@ public class SpiderController {
         // http://localhost:9999/brain/spider/sentence
         return spiderService.spiderSentence();
     }
+
+    @RequestMapping("/spider/energy")
+    @ResponseBody
+    public Object spiderEnergy(){
+        // http://localhost:9999/brain/spider/energy
+        return spiderService.spiderEnergy();
+    }
 }

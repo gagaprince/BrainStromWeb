@@ -1,5 +1,6 @@
 package com.prince.myproj.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -26,5 +27,23 @@ public class DateUtil {
         }
         SimpleDateFormat formatter = new SimpleDateFormat(formatStr);
         return formatter.format(date);
+    }
+
+    public static Date parseToDate(String dateStr,String formatStr){
+        SimpleDateFormat formatter = new SimpleDateFormat(formatStr);
+        try {
+            return formatter.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static int disFromDate(String oldStr,Date now){
+        Date old = parseToDate(oldStr,"yyyy-MM-dd");
+
+        long timedis = now.getTime()-old.getTime();
+
+        return (int)(timedis/24/3600/1000);
     }
 }
