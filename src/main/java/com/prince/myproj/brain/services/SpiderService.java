@@ -3,11 +3,13 @@ package com.prince.myproj.brain.services;
 import com.alibaba.fastjson.JSONObject;
 import com.prince.myproj.brain.dao.BrainEnergyModelMapper;
 import com.prince.myproj.brain.dao.BrainSentenceModelMapper;
+import com.prince.myproj.brain.dao.BrainWordModelMapper;
 import com.prince.myproj.brain.models.BrainEnergyModel;
 import com.prince.myproj.brain.models.BrainSentenceModel;
 import com.prince.myproj.brain.models.BrainWordModel;
 import com.prince.myproj.common.bean.AjaxBean;
 import com.prince.myproj.common.enums.ErrorCode;
+import com.prince.myproj.util.FileUtil;
 import com.prince.myproj.util.HttpUtil;
 import org.apache.log4j.Logger;
 import org.aspectj.weaver.loadtime.Aj;
@@ -33,6 +35,9 @@ public class SpiderService {
 
     @Autowired
     private BrainEnergyModelMapper brainEnergyModelMapper;
+
+    @Autowired
+    private BrainWordModelMapper brainWordModelMapper;
 
     public AjaxBean spiderSentence(){
         AjaxBean ajaxBean = new AjaxBean();
@@ -147,5 +152,76 @@ public class SpiderService {
         brainEnergyModel.setCreateTime(now);
 
         brainEnergyModelMapper.insertSelective(brainEnergyModel);
+    }
+
+    public AjaxBean spiderWordType(){
+        AjaxBean ajaxBean = new AjaxBean();
+
+        spiderCET4WordType();
+        spiderCET6WordType();
+        spiderGREWordType();
+
+        ajaxBean.setError(ErrorCode.SUCCESS);
+        return ajaxBean;
+    }
+
+    private void spiderCET4WordType(){
+        //抓取4级词汇 更新数据库 from file
+        logger.info("开始更新4级词汇");
+        String cet4Path = "/Users/wangzidong/Downloads/cet4.txt";
+        String content = FileUtil.getContentFromFile(cet4Path);
+        String[] lines = content.split("\n");
+        for(String line:lines){
+            int index = line.indexOf("/ ");
+            BrainWordModel brainWordModel = excuteWordByLineIndex(line,index);
+            if (brainWordModel != null) {
+                brainWordModel.setCet4(1);
+                brainWordModelMapper.updateByPrimaryKeySelective(brainWordModel);
+            }
+        }
+
+    }
+    private void spiderCET6WordType(){
+        //抓取6级词汇 更新数据库 from file
+        logger.info("开始更新6级词汇");
+        String cet6Path = "/Users/wangzidong/Downloads/cet6.txt";
+        String content = FileUtil.getContentFromFile(cet6Path);
+        String[] lines = content.split("\n");
+        for(String line:lines){
+            int index = line.indexOf(" ");
+            BrainWordModel brainWordModel = excuteWordByLineIndex(line,index);
+            if (brainWordModel != null) {
+                brainWordModel.setCet6(1);
+                brainWordModelMapper.updateByPrimaryKeySelective(brainWordModel);
+            }
+        }
+    }
+
+    private void spiderGREWordType(){
+        //抓取gre词汇 更新数据库 from file
+        logger.info("开始更新gre词汇");
+        String grePath = "/Users/wangzidong/Downloads/gre.txt";
+        String content = FileUtil.getContentFromFile(grePath);
+        String[] lines = content.split("\n");
+        for(String line:lines){
+            int index = line.replaceAll("\\s+"," ").indexOf(" ");
+            BrainWordModel brainWordModel = excuteWordByLineIndex(line,index);
+            if (brainWordModel != null) {
+                brainWordModel.setGre(1);
+                brainWordModelMapper.updateByPrimaryKeySelective(brainWordModel);
+            }
+        }
+    }
+
+    private BrainWordModel excuteWordByLineIndex(String line ,int index){
+        if(index!=-1){
+            String word = line.substring(0,index);
+            logger.info(word);
+            //从数据库中找到这个词
+            BrainWordModel brainWordModel = brainWordModelMapper.selectByWord(word);
+            logger.info(brainWordModel);
+            return brainWordModel;
+        }
+        return null;
     }
 }

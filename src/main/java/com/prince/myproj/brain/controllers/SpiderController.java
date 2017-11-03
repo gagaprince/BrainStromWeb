@@ -28,4 +28,11 @@ public class SpiderController {
         // http://localhost:9999/brain/spider/energy
         return spiderService.spiderEnergy();
     }
+
+    @RequestMapping("/spider/wordType")
+    @ResponseBody
+    public Object spiderWordType(){
+        // http://localhost:9999/brain/spider/wordType
+        return spiderService.spiderWordType();
+    }
 }
