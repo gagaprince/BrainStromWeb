@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.prince.myproj.brain.dao.BrainWordModelMapper;
 import com.prince.myproj.brain.models.BrainWordModel;
 import com.prince.myproj.brain.services.BrainRecordService;
+import com.prince.myproj.brain.services.BrainSearchService;
 import com.prince.myproj.brain.services.BrainWordService;
 import com.prince.myproj.common.bean.AjaxBean;
+import com.prince.myproj.common.enums.ErrorCode;
+import com.prince.myproj.util.HttpUtil;
 import com.prince.myproj.util.RequestUtil;
 import com.prince.myproj.util.StringUtil;
 import org.apache.log4j.Logger;
@@ -30,6 +33,9 @@ public class WordsController {
 
     @Autowired
     private BrainRecordService brainRecordService;
+
+    @Autowired
+    private BrainSearchService brainSearchService;
 
     @RequestMapping("/rw")
     @ResponseBody
@@ -66,6 +72,24 @@ public class WordsController {
             e.printStackTrace();
         }
         return "";
+    }
+
+    @RequestMapping("/search")
+    @ResponseBody
+    public Object search(HttpServletRequest request, HttpServletResponse response){
+        AjaxBean ajaxBean = null;
+        try {
+            JSONObject resJson = RequestUtil.getRequestBody(request);
+            String word = resJson.getString("word");
+            word = word.split("[\\.|\\!|,|\\?]")[0];
+            ajaxBean = brainSearchService.search(word);
+        } catch (IOException e) {
+            e.printStackTrace();
+            ajaxBean = new AjaxBean();
+            ajaxBean.setError(ErrorCode.REQUEST_ERROR);
+        }
+
+        return ajaxBean;
     }
 
 
