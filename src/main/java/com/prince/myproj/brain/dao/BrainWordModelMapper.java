@@ -54,7 +54,7 @@ public interface BrainWordModelMapper {
      */
     int updateByPrimaryKey(BrainWordModel record);
 
-    List<BrainWordModel> selectByStartLength(Map<String,Object> map);
+    List<BrainWordModel> selectByStartLengthAndType(Map<String,Object> map);
 
     BrainWordModel selectByWord(String word);
 }

@@ -41,7 +41,7 @@ public class BrainWordService {
         // 2.从mean表中 查找找出的单词的中文意思
         // 3.从pos表中 找出单词的词性
 
-        List<BrainWordModel> brainWordModels = findBrainWordModelsBySL(10*day,10);
+        List<BrainWordModel> brainWordModels = findBrainWordModelsBySLAndWordType(10*day,10,null);
         finishAllMsgWithWordList(brainWordModels);
 
         ajaxBean.setData(brainWordModels);
@@ -111,11 +111,12 @@ public class BrainWordService {
         return brainWordModelMap;
     }
 
-    public List<BrainWordModel> findBrainWordModelsBySL(long start, long length){
+    public List<BrainWordModel> findBrainWordModelsBySLAndWordType(long start, long length,String wordType){
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("start",start);
         map.put("length",length);
-        return brainWordModelMapper.selectByStartLength(map);
+        map.put("wordType",wordType);
+        return brainWordModelMapper.selectByStartLengthAndType(map);
     }
 
 }

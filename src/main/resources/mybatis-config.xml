@@ -5,6 +5,7 @@
 <configuration>
     <settings>
         <setting name="cacheEnabled" value="true"/>
+        <!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
         <!--<setting name="lazyLoadingEnable" value="true"/>-->
     </settings>
     <typeHandlers>

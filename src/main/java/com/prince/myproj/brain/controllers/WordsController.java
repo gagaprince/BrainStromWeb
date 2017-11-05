@@ -53,7 +53,8 @@ public class WordsController {
         try {
             JSONObject requestJson = RequestUtil.getRequestBody(request);
             String openId = requestJson.getString("openId");
-            return brainRecordService.loadRecord(openId);
+            String wordType = requestJson.getString("wordType");
+            return brainRecordService.loadRecord(openId,wordType);
         } catch (IOException e) {
             e.printStackTrace();
         }

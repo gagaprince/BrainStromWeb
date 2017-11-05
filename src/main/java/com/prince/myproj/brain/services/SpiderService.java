@@ -45,7 +45,7 @@ public class SpiderService {
         int size = 1000;
         int now = 0;
         while (true){
-            List<BrainWordModel> brainWordModels = brainWordService.findBrainWordModelsBySL(now*size,size);
+            List<BrainWordModel> brainWordModels = brainWordService.findBrainWordModelsBySLAndWordType(now*size,size,null);
             if(brainWordModels.size()==0){
                 break;
             }

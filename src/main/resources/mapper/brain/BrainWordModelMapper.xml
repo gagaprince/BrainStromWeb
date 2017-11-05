@@ -158,10 +158,14 @@
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByStartLength" parameterType="map" resultMap="BaseResultMap">
+  <select id="selectByStartLengthAndType" parameterType="map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from brain_words
+    where 1=1
+    <if test="wordType != null">
+      and brain_words.${wordType} = 1
+    </if>
     order by times desc
     <if test="start != null">
       LIMIT

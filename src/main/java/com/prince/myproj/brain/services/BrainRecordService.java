@@ -25,15 +25,15 @@ public class BrainRecordService {
     private int historyDaySize = 5;
     private int daySize = 10;
 
-    public AjaxBean loadRecord(String openId){
+    public AjaxBean loadRecord(String openId,String wordType){
         AjaxBean ajaxBean = new AjaxBean();
 
         // 拿到当前的dayindex
         BrainWordRecordModel brainWordRecordModel = loadRecordFromDB(openId);
         // 拿出历史需要记忆的数组
-        List<BrainWordModel> historyModels = findHistoryWords(brainWordRecordModel.getDayIndex());
+        List<BrainWordModel> historyModels = findHistoryWords(brainWordRecordModel.getDayIndex(),wordType);
         // 拿出今日需要记忆的新词
-        List<BrainWordModel> newModels = findNewDayWords(brainWordRecordModel.getDayIndex());
+        List<BrainWordModel> newModels = findNewDayWords(brainWordRecordModel.getDayIndex(),wordType);
 
         Map<String,Object> resultMap = new HashMap<String,Object>();
         resultMap.put("historyWords",historyModels);
@@ -48,13 +48,13 @@ public class BrainRecordService {
         return ajaxBean;
     }
 
-    private List<BrainWordModel> findNewDayWords(int dayIndex){
-        List<BrainWordModel> brainWordModels = brainWordService.findBrainWordModelsBySL(dayIndex*daySize,daySize);
+    private List<BrainWordModel> findNewDayWords(int dayIndex,String wordType){
+        List<BrainWordModel> brainWordModels = brainWordService.findBrainWordModelsBySLAndWordType(dayIndex*daySize,daySize,wordType);
         brainWordService.finishAllMsgWithWordList(brainWordModels);
         return brainWordModels;
     }
 
-    private List<BrainWordModel> findHistoryWords(int dayIndex){
+    private List<BrainWordModel> findHistoryWords(int dayIndex,String wordType){
         int beginIndex = dayIndex-historyDaySize;
         int beginSize = 0;
         int length = 0;
@@ -64,7 +64,7 @@ public class BrainRecordService {
         }else {
             length = dayIndex*daySize;
         }
-        List<BrainWordModel> brainWordModels = brainWordService.findBrainWordModelsBySL(beginSize,length);
+        List<BrainWordModel> brainWordModels = brainWordService.findBrainWordModelsBySLAndWordType(beginSize,length,wordType);
         brainWordService.finishAllMsgWithWordList(brainWordModels);
         return brainWordModels;
     }
