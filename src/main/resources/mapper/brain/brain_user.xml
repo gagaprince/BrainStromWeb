@@ -16,6 +16,7 @@
         <result column="phone" property="phone" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="session_key" property="sessionKey" jdbcType="VARCHAR" />
     </resultMap>
 
     <insert id="save"
@@ -35,6 +36,7 @@
             <if test="phone != null"> phone ,</if>
             <if test="createTime != null"> create_time ,</if>
             <if test="updateTime != null"> update_time ,</if>
+            <if test="sessionKey != null"> session_key ,</if>
         </trim>
         )values(
         <trim suffixOverrides=",">
@@ -50,6 +52,7 @@
             <if test="phone != null"> #{phone} ,</if>
             <if test="createTime != null"> #{createTime} ,</if>
             <if test="updateTime != null"> #{updateTime} ,</if>
+            <if test="sessionKey != null"> #{sessionKey} ,</if>
         </trim>
         )
     </insert>
@@ -72,5 +75,22 @@
             </if>
         </where>
     </select>
+
+    <update id="updateByOpenId" parameterType="com.prince.myproj.brain.models.BrainUserModel">
+        update brain_user
+        <set>
+            <if test="nickName != null"> nick_name = #{nickName} ,</if>
+            <if test="gender != null"> gender = #{gender} ,</if>
+            <if test="city != null"> city = #{city} ,</if>
+            <if test="province != null"> province = #{province} ,</if>
+            <if test="country != null">  country = #{country} ,</if>
+            <if test="avatarUrl != null"> avatar_url = #{avatarUrl} ,</if>
+            <if test="unionId != null"> union_id = #{unionId} ,</if>
+            <if test="phone != null">phone = #{phone} ,</if>
+            <if test="updateTime != null"> update_time = #{updateTime} ,</if>
+            <if test="sessionKey != null"> session_key = #{sessionKey} ,</if>
+        </set>
+        where open_id = #{openId}
+    </update>
 
 </mapper>

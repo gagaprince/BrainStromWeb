@@ -48,10 +48,12 @@ public class WXLoginService {
             return ajaxBean;
         }
 
+        //解密encry
+        BrainUserModel brainUserModel = parseToUser(encryptedData,iv,loginBean);
         if(!brainUserService.userExist(loginBean.getOpenId())){
-            //解密encry
-            BrainUserModel brainUserModel = parseToUser(encryptedData,iv,loginBean);
             brainUserService.addUser(brainUserModel);
+        }else{
+            brainUserService.updateUser(brainUserModel);
         }
 
         ajaxBean.setError(ErrorCode.SUCCESS);
@@ -74,6 +76,7 @@ public class WXLoginService {
         brainUserModel.setNickName(userInfoJson.getString("nickName"));
         brainUserModel.setGender(userInfoJson.getInteger("gender"));
         brainUserModel.setUnionId(userInfoJson.getString("unionId"));
+        brainUserModel.setSessionKey(sessionKey);
         brainUserModel.setCreateTime(DateUtil.now());
         brainUserModel.setUpdateTime(DateUtil.now());
         return brainUserModel;

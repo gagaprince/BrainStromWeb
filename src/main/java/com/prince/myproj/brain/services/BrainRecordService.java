@@ -65,6 +65,7 @@ public class BrainRecordService {
             length = dayIndex*daySize;
         }
         List<BrainWordModel> brainWordModels = brainWordService.findBrainWordModelsBySLAndWordType(beginSize,length,wordType);
+        Collections.reverse(brainWordModels);
         brainWordService.finishAllMsgWithWordList(brainWordModels);
         return brainWordModels;
     }

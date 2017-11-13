@@ -93,5 +93,51 @@ public class WordsController {
         return ajaxBean;
     }
 
+    @RequestMapping("/addCollect")
+    @ResponseBody
+    public Object collect(HttpServletRequest request, HttpServletResponse response){
+        AjaxBean ajaxBean = null;
+        try {
+            JSONObject reqJson = RequestUtil.getRequestBody(request);
+            int wordId = reqJson.getInteger("wordId");
+            String openId = reqJson.getString("openId");
+            ajaxBean = brainWordService.addWordCollect(wordId,openId);
+        } catch (IOException e) {
+            ajaxBean = new AjaxBean();
+            ajaxBean.setError(ErrorCode.REQUEST_ERROR);
+            e.printStackTrace();
+        }
+        return ajaxBean;
+    }
+
+    @RequestMapping("/removeCollect")
+    @ResponseBody
+    public Object reCollect(HttpServletRequest request, HttpServletResponse response){
+        AjaxBean ajaxBean = null;
+        try {
+            JSONObject reqJson = RequestUtil.getRequestBody(request);
+            int wordId = reqJson.getInteger("wordId");
+            String openId = reqJson.getString("openId");
+            ajaxBean = brainWordService.removeWordCollect(wordId,openId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ajaxBean;
+    }
+
+    @RequestMapping("/listCollect")
+    @ResponseBody
+    public Object listCollect(HttpServletRequest request, HttpServletResponse response){
+        AjaxBean ajaxBean = null;
+        try {
+            JSONObject reqJson = RequestUtil.getRequestBody(request);
+            String openId = reqJson.getString("openId");
+            ajaxBean = brainWordService.listWordCollect(openId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ajaxBean;
+    }
+
 
 }

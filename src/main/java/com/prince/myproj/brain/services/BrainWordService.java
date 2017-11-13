@@ -3,16 +3,16 @@ package com.prince.myproj.brain.services;
 import com.prince.myproj.brain.dao.BrainMeanModelMapper;
 import com.prince.myproj.brain.dao.BrainPosModelMapper;
 import com.prince.myproj.brain.dao.BrainWordModelMapper;
-import com.prince.myproj.brain.models.BrainMeanModel;
-import com.prince.myproj.brain.models.BrainPosModel;
-import com.prince.myproj.brain.models.BrainWordModel;
+import com.prince.myproj.brain.models.*;
 import com.prince.myproj.common.bean.AjaxBean;
 import com.prince.myproj.common.enums.ErrorCode;
 import com.prince.myproj.util.StringUtil;
 import org.apache.log4j.Logger;
+import org.aspectj.weaver.loadtime.Aj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +33,9 @@ public class BrainWordService {
 
     @Autowired
     private BrainSentenceService brainSentenceService;
+
+    @Autowired
+    private BrainWordCollectService brainWordCollectService;
 
     public AjaxBean getWordsByDay(int day){
         AjaxBean ajaxBean = new AjaxBean();
@@ -117,6 +120,48 @@ public class BrainWordService {
         map.put("length",length);
         map.put("wordType",wordType);
         return brainWordModelMapper.selectByStartLengthAndType(map);
+    }
+
+    public AjaxBean addWordCollect(Integer wordId,String openId){
+        BrainUserModel brainUserModel = new BrainUserModel();
+        brainUserModel.setOpenId(openId);
+        brainWordCollectService.addWord(wordId,brainUserModel);
+        AjaxBean ajaxBean = new AjaxBean();
+        ajaxBean.setError(ErrorCode.SUCCESS);
+        return ajaxBean;
+    }
+
+    public AjaxBean removeWordCollect(Integer wordId,String openId){
+        BrainUserModel brainUserModel = new BrainUserModel();
+        brainUserModel.setOpenId(openId);
+        brainWordCollectService.removeWord(wordId,brainUserModel);
+        AjaxBean ajaxBean = new AjaxBean();
+        ajaxBean.setError(ErrorCode.SUCCESS);
+        return ajaxBean;
+    }
+
+    public AjaxBean listWordCollect(String openId){
+        BrainUserModel brainUserModel = new BrainUserModel();
+        brainUserModel.setOpenId(openId);
+        List<BrainWordCollectModel> brainWordCollectModels = brainWordCollectService.searchByUser(brainUserModel);
+        List<BrainWordModel> brainWordModels = findBrainWordModelsByBrainWordCollectModles(brainWordCollectModels);
+        finishAllMsgWithWordList(brainWordModels);
+        AjaxBean ajaxBean = new AjaxBean();
+        ajaxBean.setError(ErrorCode.SUCCESS);
+        return ajaxBean;
+    }
+
+    private List<BrainWordModel> findBrainWordModelsByBrainWordCollectModles(List<BrainWordCollectModel> brainWordCollectModels){
+        List<Integer> wordIds = new ArrayList<Integer>();
+        for(int i=0;i<brainWordCollectModels.size();i++){
+            BrainWordCollectModel brainWordCollectModel = brainWordCollectModels.get(i);
+            wordIds.add(brainWordCollectModel.getWordId());
+        }
+        if(wordIds.size()==0){
+            return new ArrayList<BrainWordModel>();
+        }else{
+            return brainWordModelMapper.selectByWordList(wordIds);
+        }
     }
 
 }

@@ -27,5 +27,8 @@ public class BrainUserService {
     public void addUser(BrainUserModel brainUserModel){
         brainUserDao.save(brainUserModel);
     }
+    public void updateUser(BrainUserModel brainUserModel){
+        brainUserDao.updateByOpenId(brainUserModel);
+    }
 
 }

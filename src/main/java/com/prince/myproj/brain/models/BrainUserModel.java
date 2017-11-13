@@ -13,6 +13,20 @@ public class BrainUserModel {
     private String phone;
     private String createTime;
     private String updateTime;
+    private String sessionKey;
+
+
+    public String getSessionKey() {
+        return sessionKey;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setSessionKey(String sessionKey) {
+        this.sessionKey = sessionKey;
+    }
 
     public String getCreateTime() {
         return createTime;

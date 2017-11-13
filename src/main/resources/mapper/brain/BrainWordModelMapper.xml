@@ -177,6 +177,18 @@
 
   </select>
 
+  <select id="selectByWordList" parameterType="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from brain_words
+    where id in
+    <foreach collection="list" item="wordId" index="index"
+             open="(" close=")" separator=",">
+      wordId
+    </foreach>
+
+  </select>
+
   <select id="selectByWord" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

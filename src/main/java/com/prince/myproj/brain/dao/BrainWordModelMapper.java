@@ -56,5 +56,7 @@ public interface BrainWordModelMapper {
 
     List<BrainWordModel> selectByStartLengthAndType(Map<String,Object> map);
 
+    List<BrainWordModel> selectByWordList(List<Integer> wordIds);
+
     BrainWordModel selectByWord(String word);
 }
