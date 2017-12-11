@@ -140,6 +140,16 @@ public class BrainWordService {
         return ajaxBean;
     }
 
+    public AjaxBean isInWordCollect(Integer wordId,String openId){
+        BrainUserModel brainUserModel = new BrainUserModel();
+        brainUserModel.setOpenId(openId);
+        BrainWordCollectModel brainWordCollectModel = brainWordCollectService.searchWord(wordId,brainUserModel);
+        AjaxBean ajaxBean = new AjaxBean();
+        ajaxBean.setData(brainWordCollectModel);
+        ajaxBean.setError(ErrorCode.SUCCESS);
+        return ajaxBean;
+    }
+
     public AjaxBean listWordCollect(String openId){
         BrainUserModel brainUserModel = new BrainUserModel();
         brainUserModel.setOpenId(openId);
@@ -147,8 +157,17 @@ public class BrainWordService {
         List<BrainWordModel> brainWordModels = findBrainWordModelsByBrainWordCollectModles(brainWordCollectModels);
         finishAllMsgWithWordList(brainWordModels);
         AjaxBean ajaxBean = new AjaxBean();
+        ajaxBean.setData(brainWordModels);
         ajaxBean.setError(ErrorCode.SUCCESS);
         return ajaxBean;
+    }
+
+    public int wordCollectCount(String openId){
+        BrainUserModel brainUserModel = new BrainUserModel();
+        brainUserModel.setOpenId(openId);
+        List<BrainWordCollectModel> brainWordCollectModels = brainWordCollectService.searchByUser(brainUserModel);
+        List<BrainWordModel> brainWordModels = findBrainWordModelsByBrainWordCollectModles(brainWordCollectModels);
+        return brainWordModels.size();
     }
 
     private List<BrainWordModel> findBrainWordModelsByBrainWordCollectModles(List<BrainWordCollectModel> brainWordCollectModels){

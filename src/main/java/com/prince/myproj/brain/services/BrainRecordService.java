@@ -107,9 +107,14 @@ public class BrainRecordService {
             historySize = dayIndex*daySize;
         }
 
+        int collectCount = brainWordService.wordCollectCount(openId);
+
+
         Map<String,Object> resultMap = new HashMap<String,Object>();
         resultMap.put("historySize",historySize);
+        resultMap.put("dayIndex",dayIndex);
         resultMap.put("newSize",daySize);
+        resultMap.put("collectCount",collectCount);
         resultMap.put("totalSize",historySize+daySize);
         resultMap.put("dayIndex",dayIndex);
 

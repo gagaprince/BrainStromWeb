@@ -35,6 +35,14 @@ public class BrainWordCollectService {
 
     }
 
+    public BrainWordCollectModel searchWord(Integer wordId,BrainUserModel brainUserModel){
+        BrainWordCollectModel brainWordCollectModel = new BrainWordCollectModel();
+        brainWordCollectModel.setOpenId(brainUserModel.getOpenId());
+        brainWordCollectModel.setWordId(wordId);
+        brainWordCollectModel = brainWordCollectModelMapper.selectByOpenIdAndWordId(brainWordCollectModel);
+        return brainWordCollectModel;
+    }
+
     public void removeWord(Integer wordId,BrainUserModel brainUserModel){
         BrainWordCollectModel brainWordCollectModel = new BrainWordCollectModel();
         brainWordCollectModel.setOpenId(brainUserModel.getOpenId());

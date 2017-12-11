@@ -125,6 +125,21 @@ public class WordsController {
         return ajaxBean;
     }
 
+    @RequestMapping("/isInCollect")
+    @ResponseBody
+    public Object isInCollect(HttpServletRequest request, HttpServletResponse response){
+        AjaxBean ajaxBean = null;
+        try {
+            JSONObject reqJson = RequestUtil.getRequestBody(request);
+            int wordId = reqJson.getInteger("wordId");
+            String openId = reqJson.getString("openId");
+            ajaxBean = brainWordService.isInWordCollect(wordId,openId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ajaxBean;
+    }
+
     @RequestMapping("/listCollect")
     @ResponseBody
     public Object listCollect(HttpServletRequest request, HttpServletResponse response){
