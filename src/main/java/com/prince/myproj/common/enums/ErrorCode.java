@@ -7,6 +7,7 @@ public enum ErrorCode {
     WORD_NO_SEARCH_RESULT("没有查询到结果",1002),
     WORD_SEARCH_ERROR("搜索失败",1003),
     REQUEST_ERROR("获取搜索参数失败",1004),
+    GET_TOKEN_ERROR("没有获取到ACCESS_TOKEN",1005),
     ;
     private String des;
     private int code;

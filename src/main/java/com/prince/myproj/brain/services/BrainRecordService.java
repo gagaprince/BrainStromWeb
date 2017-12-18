@@ -70,7 +70,7 @@ public class BrainRecordService {
         return brainWordModels;
     }
 
-    private BrainWordRecordModel loadRecordFromDB(String openId){
+    public BrainWordRecordModel loadRecordFromDB(String openId){
         BrainWordRecordModel brainWordRecordModel = brainWordRecordModelMapper.selectByOpenId(openId);
         if(brainWordRecordModel==null){
             // 说明用户是第一次进入 初始化内容
@@ -121,6 +121,10 @@ public class BrainRecordService {
         ajaxBean.setError(ErrorCode.SUCCESS);
         ajaxBean.setData(resultMap);
         return ajaxBean;
+    }
+
+    public int getAllRecordNum(){
+        return brainWordRecordModelMapper.selectAllRecord(null);
     }
 
 }

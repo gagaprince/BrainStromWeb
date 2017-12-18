@@ -76,6 +76,29 @@
         </where>
     </select>
 
+    <select id="selectAllUser" parameterType="map" resultMap="BrainUserModelResultMap">
+        select * from brain_user
+    </select>
+
+    <select id="selectByOpenId" parameterType="com.prince.myproj.brain.models.BrainUserModel" resultMap="BrainUserModelResultMap">
+        select * from brain_user s
+        <where>
+            1=1
+            <if test="id != null">
+                and s.id = #{id}
+            </if>
+            <if test="openId != null">
+                and s.open_id = #{openId}
+            </if>
+            <if test="unionId != null">
+                and s.union_id = #{unionId}
+            </if>
+            <if test="phone != null">
+                and s.phone = #{phone}
+            </if>
+        </where>
+    </select>
+
     <update id="updateByOpenId" parameterType="com.prince.myproj.brain.models.BrainUserModel">
         update brain_user
         <set>

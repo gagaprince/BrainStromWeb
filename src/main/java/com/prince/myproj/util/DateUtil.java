@@ -39,11 +39,13 @@ public class DateUtil {
         return null;
     }
 
+    public static int disFromDate(Date old, Date now){
+        long timedis = now.getTime()-old.getTime();
+        return (int)(timedis/24/3600/1000);
+    }
+
     public static int disFromDate(String oldStr,Date now){
         Date old = parseToDate(oldStr,"yyyy-MM-dd");
-
-        long timedis = now.getTime()-old.getTime();
-
-        return (int)(timedis/24/3600/1000);
+        return disFromDate(old,now);
     }
 }
