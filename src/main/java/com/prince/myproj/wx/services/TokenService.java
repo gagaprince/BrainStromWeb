@@ -73,7 +73,7 @@ class TokenThread extends Thread{
     }
     public void run() {
         try {
-            Thread.sleep((long)(60*1000));
+            Thread.sleep((long)(60*60*1000));
             this.tokenService.resetToken();
         } catch (InterruptedException e) {
             e.printStackTrace();
