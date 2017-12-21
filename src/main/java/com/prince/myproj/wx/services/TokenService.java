@@ -43,15 +43,16 @@ public class TokenService {
         return ajaxBean;
     }
     public String getToken(){
-        if(token == null){
+        if(this.token == null){
             reloadToken();
-            if(token != null){
+            if(this.token != null){
                 new TokenThread(this).start();
             }
         }
         return this.token;
     }
     public void resetToken(){
+        logger.info("resetToken:");
         this.token = null;
     }
     public void reloadToken(){

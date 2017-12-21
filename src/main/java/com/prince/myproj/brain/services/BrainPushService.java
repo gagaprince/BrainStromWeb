@@ -100,7 +100,7 @@ public class BrainPushService {
         // 发送每日提醒消息
 
         String templateId = config.getString("daily_remind_id");
-        String page =  "/pages/index/index?from=push&templateId="+templateId;
+        String page =  "pages/index/index?from=push&templateId="+templateId;
 
         TemplateMsgBean dailyMsgModel = new TemplateMsgBean();
         dailyMsgModel.setTouser(brainPushModel.getOpenId());
