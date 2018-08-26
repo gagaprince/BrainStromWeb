@@ -146,14 +146,14 @@ public class BrainPushService {
         return brainRecordService.getAllRecordNum();
     }
 
-    private void pushMsg(JSONObject jsonObject){
+    public void pushMsg(JSONObject jsonObject){
         String url = config.getString("template_msg_url")+"?access_token="+tokenService.getToken();
         logger.info(jsonObject);
         String result = HttpUtil.postJSON(url,jsonObject);
         logger.info(result);
     }
 
-    private List<BrainPushModel> findListByOpenId(String openId){
+    public List<BrainPushModel> findListByOpenId(String openId){
         BrainPushModel brainPushModel = new BrainPushModel();
         brainPushModel.setAlive(1);
         brainPushModel.setOpenId(openId);
@@ -161,7 +161,7 @@ public class BrainPushService {
         return brainPushModels;
     }
 
-    private BrainPushModel findOneAlivePushModel(List<BrainPushModel> brainPushModels){
+    public BrainPushModel findOneAlivePushModel(List<BrainPushModel> brainPushModels){
         if(brainPushModels!=null){
             Date now = new Date();
             for(int i=0;i<brainPushModels.size();i++){

@@ -3,6 +3,7 @@ package com.prince.myproj.brain.controllers;
 import com.alibaba.fastjson.JSONObject;
 import com.prince.myproj.brain.services.BrainPushService;
 import com.prince.myproj.brain.services.EnergyService;
+import com.prince.myproj.brain.services.HuobiPushService;
 import com.prince.myproj.common.bean.AjaxBean;
 import com.prince.myproj.util.RequestUtil;
 import org.apache.log4j.Logger;
@@ -22,6 +23,9 @@ public class PushController {
 
     @Autowired
     BrainPushService brainPushService;
+
+    @Autowired
+    HuobiPushService huobiPushService;
 
     @RequestMapping("/collectFormId")
     @ResponseBody
@@ -44,6 +48,18 @@ public class PushController {
     @ResponseBody
     public AjaxBean autoPushDaily(){
         AjaxBean ajaxBean = brainPushService.autoPushDaily();
+        return ajaxBean;
+    }
+
+    @RequestMapping("/pushHuoBiMsg")
+    @ResponseBody
+    public AjaxBean pushHuoBiMsg(HttpServletRequest request){
+        String openId = request.getParameter("openId");
+        String zt = request.getParameter("zt");
+        logger.info(zt);
+        String desc = request.getParameter("desc");
+        String time = request.getParameter("time");
+        AjaxBean ajaxBean = huobiPushService.pushHuoBiBuyMsg(zt,time,desc,openId);
         return ajaxBean;
     }
 
