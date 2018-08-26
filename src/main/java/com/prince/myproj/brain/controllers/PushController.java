@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @Controller
 @RequestMapping("brain")
@@ -53,11 +54,13 @@ public class PushController {
 
     @RequestMapping("/pushHuoBiMsg")
     @ResponseBody
-    public AjaxBean pushHuoBiMsg(HttpServletRequest request){
+    public AjaxBean pushHuoBiMsg(HttpServletRequest request) throws UnsupportedEncodingException {
         String openId = request.getParameter("openId");
         String zt = request.getParameter("zt");
+        zt = new String(zt.getBytes("iso-8859-1"),"utf-8");
         logger.info(zt);
         String desc = request.getParameter("desc");
+        desc = new String(desc.getBytes("iso-8859-1"),"utf-8");
         String time = request.getParameter("time");
         AjaxBean ajaxBean = huobiPushService.pushHuoBiBuyMsg(zt,time,desc,openId);
         return ajaxBean;
